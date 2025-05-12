@@ -7,6 +7,10 @@ using namespace std;
 
 // Добавление в список друзей
 void AddFriend(map<string, set<string>>& list, string person1, string person2) {
+    if (person1 == person2) {
+        cout << "Одинаковые имена!" << endl;
+	return ;
+    }
     list[person1].insert(person2);
     list[person2].insert(person1);
 }
@@ -18,6 +22,10 @@ int CountFriends(map<string, set<string>>& list, string person) {
 
 // Проверка на дружбу первого со вторым
 bool FriendCheck(map<string, set<string>>& list, string person1, string person2) {
+    if (person1 == person2) {
+        cout << "Одинаковые имена!" << endl;
+	return false;
+    }
     if (list[person1].contains(person2) && list[person2].contains(person1)) {
         return true;
     }
@@ -28,6 +36,7 @@ int main() {
     int query_count;
     string query;
     map<string, set<string>> friend_list;
+    cout << "Введите количество запросов: ";
     cin >> query_count;
 
     for (int i = 0; i <= query_count; ++i) {

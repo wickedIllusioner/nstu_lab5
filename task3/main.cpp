@@ -78,7 +78,7 @@ int main() {
                 GetTrainsForTown(q.town, towns_to_trains);
                 break;
             case QueryType::TOWNS_FOR_TRAIN:
-                GetTownsForTrain(q.train, trains_to_towns);
+                GetTownsForTrain(q.train, trains_to_towns, towns_to_trains);
                 break;
             case QueryType::TRAINS:
                 ShowTrains(trains_to_towns);

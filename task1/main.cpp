@@ -51,6 +51,16 @@ bool CheckCell(string cell, const map<string, vector<CellUnit>> db) {
     return false;
 }
 
+bool AddToExistingGood(map<string, vector<CellUnit>>& db, const string& good, int amount, const string& cell) {
+    for (auto& elem : db[cell]) {
+        if (elem.good == good) {
+	    elem.amount += amount;
+	    return true;
+	}
+    }
+    return false;
+}
+
 // Удаление товара из ячейки
 bool RemoveFromCell(map<string, vector<CellUnit>>& db, const string& good, int amount, const string& cell) {
     int total {};
@@ -122,7 +132,8 @@ int main() {
                 continue;
             }
             if (CellSpace(db[cell]) + unit.amount <= MAX_CELL_CAPACITY) {
-                db[cell].push_back(unit);
+		if (!AddToExistingGood(db, unit.good, unit.amount, cell)) 
+                    db[cell].push_back(unit);
                 cout << "Успешно!" << endl;
             }
             else {
@@ -141,7 +152,7 @@ int main() {
                 cout << "Удаление завершено!" << endl;
             }
             else {
-                cout << "Невозможно выполнить операцию: введенное число для удаления превышает количество товара в ячейке" << endl;
+                cout << "Невозможно выполнить операцию: введенное число для удаления превышает количество товара в ячейке или товар отсутствует" << endl;
                 continue;
             }
         }
@@ -163,9 +174,11 @@ int main() {
             cout << endl;
         }
 
-        else {
-            cout << "Неизвестная операция. Повторите ввод снова" << endl;
-        }
+	if (operation == "EXIT") {
+		cout << "Выходим..." << endl;
+	}
+
+       
     }
 
     return 0;
